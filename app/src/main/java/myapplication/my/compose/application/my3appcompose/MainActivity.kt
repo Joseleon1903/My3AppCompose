@@ -1,7 +1,6 @@
 package myapplication.my.compose.application.my3appcompose
 
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,7 +10,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -23,11 +22,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -40,15 +40,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import myapplication.my.compose.application.my3appcompose.ui.theme.My3AppComposeTheme
-import myapplication.my.compose.application.my3appcompose.ui.theme.guest.world.UtilsWords
-import java.util.Arrays
+import myapplication.my.compose.application.my3appcompose.world.UtilsWords
 import java.util.Random
 
 class MainActivity : ComponentActivity() {
@@ -89,6 +88,9 @@ fun AppMainView(){
     var textInput by remember { mutableStateOf("") }
     var question by remember { mutableStateOf("") }
     var showLabel by remember { mutableStateOf("") }
+
+    var winCounter by remember { mutableStateOf("0") }
+    var lifeCounter by remember { mutableStateOf("5") }
 
     day = Days[random.nextInt(Days.size)]
     question = UtilsWords.mixWord(day)
@@ -167,6 +169,82 @@ fun AppMainView(){
             )
 
             Spacer(modifier = Modifier.height(100.dp))
+
+
+            // vidas y fallos jiego status
+            Column(modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Center, // Centrar en la pantalla
+                horizontalAlignment = Alignment.CenterHorizontally // Centrar horizontalmente
+            ) {
+
+                Row(  modifier = Modifier
+                    .height(150.dp)
+                    .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center){
+
+                    // trophy Button
+                    Button(
+                        onClick = { /* Acción del botón */ },
+                        modifier = Modifier.height(200.dp).width(150.dp)
+                            .padding(16.dp)
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally, // Centra la columna horizontalmente
+                            verticalArrangement = Arrangement.Center, // Centra los elementos dentro de la columna
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            // Imagen en la parte superior
+                            Image(
+                                painter = painterResource(id = R.drawable.trophy), // Aquí debes usar tu imagen
+                                contentDescription = "Imagen dentro del botón",
+                                modifier = Modifier.size(40.dp) // Tamaño de la imagen
+                            )
+
+                            Spacer(modifier = Modifier.height(8.dp)) // Espacio entre la imagen y el texto
+
+                            // Texto en la parte inferior
+                            Text(
+                                text = winCounter,
+                                color = Color.White, // Color del texto
+                                fontSize = 24.sp
+                            )
+                        }
+                    }
+
+                    // lifeButton
+                    Button(
+                        onClick = { /* Acción del botón */ },
+                        modifier = Modifier.height(200.dp).width(150.dp)
+                            .padding(16.dp)
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally, // Centra la columna horizontalmente
+                            verticalArrangement = Arrangement.Center, // Centra los elementos dentro de la columna
+                        ) {
+                            // Imagen en la parte superior
+                            Image(
+                                painter = painterResource(id = R.drawable.life_insurance), // Aquí debes usar tu imagen
+                                contentDescription = "Imagen dentro del botón",
+                                modifier = Modifier.size(40.dp) // Tamaño de la imagen
+                            )
+
+                            Spacer(modifier = Modifier.height(8.dp)) // Espacio entre la imagen y el texto
+
+                            // Texto en la parte inferior
+                            Text(
+                                text = lifeCounter,
+                                color = Color.White, // Color del texto
+                                fontSize = 24.sp
+                            )
+                        }
+                    }
+
+                }
+            }
+
+
+
+
             //linear de botones 3
 
 
@@ -177,7 +255,6 @@ fun AppMainView(){
             ) {
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .fillMaxWidth()
                         .background(Color.Red),
                     horizontalArrangement = Arrangement.Center // Espaciado uniforme
@@ -203,8 +280,21 @@ fun AppMainView(){
                             if (textInput.equals(day, ignoreCase = true)){
                                 Toast.makeText(context, "You got it!!", Toast.LENGTH_SHORT).show()
                                 isVisible.value = true
+                                winCounter = UtilsWords.increaseString(winCounter)
                             }else{
-                                Toast.makeText(context, "Try Again!!", Toast.LENGTH_SHORT).show()
+                                try {
+                                    lifeCounter = UtilsWords.decreaseString(lifeCounter)
+                                    Toast.makeText(context, "Try Again!!", Toast.LENGTH_SHORT).show()
+                                    textInput = ""
+                                }catch (ex: Exception){
+                                    Toast.makeText(context, "You Lose!!!", Toast.LENGTH_SHORT).show()
+                                    day = Days[random.nextInt(Days.size)]
+                                    question = UtilsWords.mixWord(day)
+                                    isVisible.value = false
+                                    textInput = ""
+                                    winCounter = "0"
+                                    lifeCounter = "5"
+                                }
                             } },
                         modifier = Modifier
                             .weight(2f)
