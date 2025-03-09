@@ -46,7 +46,7 @@ import myapplication.my.compose.application.my3appcompose.ui.theme.My3AppCompose
 import java.util.Random
 
 @Composable
-fun GuestWorldScreen (guestWord : String ,correctWord: String,generateWord :() -> Unit,  navigateToScreen : () -> Unit){
+fun GuestWorldScreen (guestList : Array<String>,  navigateToScreen : () -> Unit){
 
     val context = LocalContext.current
     val isVisible = remember { mutableStateOf(false) }
@@ -57,7 +57,16 @@ fun GuestWorldScreen (guestWord : String ,correctWord: String,generateWord :() -
     var winCounter by remember { mutableStateOf("0") }
     var lifeCounter by remember { mutableStateOf("5") }
 
-    var guestLabel by remember { mutableStateOf(guestWord) }
+
+    var day : String? = null;
+    var guest:String = "";
+    if(day.isNullOrBlank()){
+        day =  guestList[Random().nextInt(guestList.size)]
+        guest = UtilsWords.mixWord(day)
+    }
+
+    var guestLabel by remember { mutableStateOf(guest) }
+
 
     CustomTopAppBar("Guest Word",navigateToScreen )
 
@@ -223,7 +232,7 @@ fun GuestWorldScreen (guestWord : String ,correctWord: String,generateWord :() -
                 Button(
                     onClick = {
                         println("Entering in Show button")
-                        showLabel = correctWord
+                        showLabel =day!!
                         isVisible.value = true
                     },
                     modifier = Modifier
@@ -238,7 +247,7 @@ fun GuestWorldScreen (guestWord : String ,correctWord: String,generateWord :() -
                 Button(
                     onClick = {
                         println("Entering in check button")
-                        if (textInput.equals(correctWord, ignoreCase = true)){
+                        if (textInput.equals(day, ignoreCase = true)){
                             Toast.makeText(context, "You got it!!", Toast.LENGTH_SHORT).show()
                             isVisible.value = true
                             winCounter = UtilsWords.increaseString(winCounter)
@@ -266,7 +275,9 @@ fun GuestWorldScreen (guestWord : String ,correctWord: String,generateWord :() -
                 Button(
                     onClick = {
                         println("Entering in Next button")
-                        generateWord()
+                        day = guestList[Random().nextInt(guestList.size)]
+                        guest = UtilsWords.mixWord(day!!)
+                        guestLabel = guest
                         isVisible.value = false
                         textInput = ""
                     },

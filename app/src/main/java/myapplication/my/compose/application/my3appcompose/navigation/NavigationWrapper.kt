@@ -38,11 +38,7 @@ fun NavigationWrapper (){
         }
 
         composable<GuestWorld> {
-            GuestWorldScreen(question, day , generateWord = {
-                day = Days[Random().nextInt(Days.size)]
-                question = UtilsWords.mixWord(day)
-                println("Executing $question")
-            }
+            GuestWorldScreen(Days
             ){
                 navController.popBackStack()
             }
