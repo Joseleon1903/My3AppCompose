@@ -46,6 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import myapplication.my.compose.application.my3appcompose.navigation.HomeScreen
 import myapplication.my.compose.application.my3appcompose.navigation.NavigationWrapper
 import myapplication.my.compose.application.my3appcompose.ui.theme.My3AppComposeTheme
 import myapplication.my.compose.application.my3appcompose.world.UtilsWords
@@ -57,26 +58,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
            NavigationWrapper()
-        }
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun AppMainView(){
-
-}
-
-
-
-@Composable
-fun GreetingPreview() {
-    My3AppComposeTheme {
-
-        Column(modifier = Modifier.fillMaxWidth()) {
-
-
         }
     }
 }

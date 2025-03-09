@@ -7,3 +7,9 @@ object Home
 
 @Serializable
 object GuestWorld
+
+@Serializable
+data class Calculator(val name:String)
+
+@Serializable
+object LongStory
