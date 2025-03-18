@@ -39,10 +39,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.text.util.LocalePreferences
 import myapplication.my.compose.application.my3appcompose.R
 import myapplication.my.compose.application.my3appcompose.navigation.CustomTopAppBar
-import myapplication.my.compose.application.my3appcompose.ui.theme.My3AppComposeTheme
 import java.util.Random
 
 @Composable
