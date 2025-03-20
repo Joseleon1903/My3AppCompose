@@ -13,3 +13,6 @@ data class Calculator(val name:String)
 
 @Serializable
 object LongStory
+
+@Serializable
+object AddComment

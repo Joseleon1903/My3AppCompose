@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import myapplication.my.compose.application.my3appcompose.navigation.CustomTopAppBar
@@ -118,7 +117,7 @@ fun CalculatorScreen(name : String,navigateToScreen : () -> Unit  ) {
                }
 
                 Spacer(modifier = Modifier.height(8.dp))
-                if(!selectedDate.isNullOrEmpty()){
+                if(selectedDate.isNotEmpty()){
                     Text(text = "Date: $selectedDate", fontSize = 22.sp)
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -128,18 +127,6 @@ fun CalculatorScreen(name : String,navigateToScreen : () -> Unit  ) {
             }
         }
 
-
-
-
-
     }
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AppMainView(){
-
-    CalculatorScreen("example"){ println("gogog")}
 
 }

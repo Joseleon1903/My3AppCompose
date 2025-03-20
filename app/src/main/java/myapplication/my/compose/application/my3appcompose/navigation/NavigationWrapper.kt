@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import myapplication.my.compose.application.my3appcompose.calculator.CalculatorScreen
+import myapplication.my.compose.application.my3appcompose.strory.AddCommentScreen
 import myapplication.my.compose.application.my3appcompose.strory.LongStoryScreen
 import myapplication.my.compose.application.my3appcompose.world.GuestWorldScreen
 import myapplication.my.compose.application.my3appcompose.world.UtilsWords
@@ -52,7 +53,13 @@ fun NavigationWrapper (){
         }
 
         composable<LongStory> {
-            LongStoryScreen(){
+            LongStoryScreen(navController){
+                navController.popBackStack()
+            }
+        }
+
+        composable<AddComment> {
+            AddCommentScreen(){
                 navController.popBackStack()
             }
         }
