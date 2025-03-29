@@ -1,5 +1,7 @@
 package myapplication.my.compose.application.my3appcompose.strory
 
+import kotlinx.serialization.json.Json
+
 class TextUtil {
 
     companion object  {
@@ -15,4 +17,14 @@ class TextUtil {
                     "lograda en distintos momentos según el país, fue el resultado de siglos de resistencia y lucha por la dignidad y los derechos humanos."
 
     }
+
+    fun commentsToString(comments: List<CommentInfo>): String {
+        return Json.encodeToString(comments)
+    }
+    fun stringToComments(json: String): MutableList<CommentInfo> {
+        val commentsList = Json.decodeFromString<List<CommentInfo>>(json)
+        return commentsList as MutableList<CommentInfo>
+    }
+
+
 }

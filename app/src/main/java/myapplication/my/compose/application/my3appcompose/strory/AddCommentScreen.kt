@@ -30,13 +30,17 @@ import androidx.compose.ui.unit.sp
 import myapplication.my.compose.application.my3appcompose.navigation.CustomTopAppBar
 
 @Composable
-fun AddCommentScreen (navigateToScreen : () -> Unit){
+fun AddCommentScreen (comments :String, navigateToScreen : () -> Unit){
 
     var nickname by remember { mutableStateOf("") }
     var content by remember { mutableStateOf("") }
     var date by remember { mutableStateOf("") }
     var sex by remember { mutableStateOf("") }
-    val sexOptions = listOf(TextUtil.SexFemale, TextUtil.SexFemale)
+    val sexOptions = listOf(TextUtil.SexFemale, TextUtil.SexMale)
+
+    var commentList = TextUtil().stringToComments(comments)
+
+    println("detail commentList: "+commentList.size)
 
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -101,6 +105,9 @@ fun AddCommentScreen (navigateToScreen : () -> Unit){
             // Botón para enviar
             Button(onClick = {
                 val comment = CommentInfo(nickname, content, date, sex)
+                CommentDatabaseManager.add(comment)
+                println("Add comment list " + CommentDatabaseManager.get().size)
+                navigateToScreen()
                // onSubmit(comment)
             }) {
                 Text("Submit")
@@ -118,6 +125,7 @@ fun AddCommentScreen (navigateToScreen : () -> Unit){
 fun AddCommentView(){
 
     AddCommentScreen(
+        comments = "",
         navigateToScreen = {}
     )
 

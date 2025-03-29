@@ -28,14 +28,17 @@ import androidx.navigation.NavHostController
 import myapplication.my.compose.application.my3appcompose.R
 import myapplication.my.compose.application.my3appcompose.navigation.AddComment
 import myapplication.my.compose.application.my3appcompose.navigation.CustomTopAppBar
-import myapplication.my.compose.application.my3appcompose.navigation.LongStory
 
 @Composable
-fun LongStoryScreen (navController: NavHostController?, navigateToScreen : () -> Unit){
+fun LongStoryScreen (comments :String, navController: NavHostController?, navigateToScreen : () -> Unit){
 
-    Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(rememberScrollState())) {
 
         CustomTopAppBar("Long Story",navigateToScreen )
+
+        println("LongStoryScreen commentList: $comments")
 
         // Imagen superior
         Image(
@@ -91,16 +94,21 @@ fun LongStoryScreen (navController: NavHostController?, navigateToScreen : () ->
 
         // comments
         Spacer(modifier = Modifier.height(15.dp))
-        CommentItem( CommentInfo( nickname= "App developer",
-           content ="Este es mi mejor comentario",
-            date="35 minute ago",
-            sex=TextUtil.SexMale)
-        )
-        CommentItem( CommentInfo( nickname= "App developer",
-            content ="Este es mi mejor comentario",
-            date="35 minute ago",
-            sex=TextUtil.SexFemale)
-        )
+
+        if(!comments.isEmpty()){
+            CommentList(comments = TextUtil().stringToComments(comments))
+        }
+
+//        CommentItem( CommentInfo( nickname= "App developer",
+//           content ="Este es mi mejor comentario",
+//            date="35 minute ago",
+//            sex=TextUtil.SexMale)
+//        )
+//        CommentItem( CommentInfo( nickname= "App developer",
+//            content ="Este es mi mejor comentario",
+//            date="35 minute ago",
+//            sex=TextUtil.SexFemale)
+//        )
 
 
         Spacer(modifier = Modifier.height(5.dp))
@@ -109,9 +117,11 @@ fun LongStoryScreen (navController: NavHostController?, navigateToScreen : () ->
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.Start){
             Button(
-                modifier = Modifier.padding(5.dp).fillMaxWidth(),
+                modifier = Modifier
+                    .padding(5.dp)
+                    .fillMaxWidth(),
                 onClick = { println("Press button")
-                    navController?.navigate(AddComment)
+                    navController?.navigate(AddComment(comments))
                 }) {
                 Text("White a comment")
             }
@@ -125,6 +135,7 @@ fun LongStoryScreen (navController: NavHostController?, navigateToScreen : () ->
 fun AppMainView(){
 
     LongStoryScreen(
+        comments = "",
         navController = null,
         navigateToScreen = {}
     )

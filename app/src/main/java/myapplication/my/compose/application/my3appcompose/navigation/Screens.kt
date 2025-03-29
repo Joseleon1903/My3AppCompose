@@ -12,7 +12,7 @@ object GuestWorld
 data class Calculator(val name:String)
 
 @Serializable
-object LongStory
+data class LongStory(val comments :String)
 
 @Serializable
-object AddComment
+data class AddComment(val comments :String)
