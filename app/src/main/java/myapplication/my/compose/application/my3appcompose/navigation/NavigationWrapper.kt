@@ -33,7 +33,7 @@ fun NavigationWrapper (){
         composable<Home> {
             HomeScreen{ it ->
                 println("Screen name $it")
-                if(it.equals(toString(), true)){
+                if(it.equals(GuestWorld.toString(), true)){
                     navController.navigate(GuestWorld)
                 }else if(it.equals(Calculator.toString(), true)){
                     navController.navigate(Calculator(name = "Calculator"))

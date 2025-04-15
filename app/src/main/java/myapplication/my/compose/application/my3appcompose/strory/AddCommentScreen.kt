@@ -104,6 +104,8 @@ fun AddCommentScreen (comments :String, navigateToScreen : () -> Unit){
 
             // Botón para enviar
             Button(onClick = {
+                date = DateUtils.getFormattedDateTime()
+                println("Fecha " +date )
                 val comment = CommentInfo(nickname, content, date, sex)
                 CommentDatabaseManager.add(comment)
                 println("Add comment list " + CommentDatabaseManager.get().size)

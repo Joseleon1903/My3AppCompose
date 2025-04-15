@@ -66,11 +66,13 @@ fun GuestWorldScreen (guestList : Array<String>,  navigateToScreen : () -> Unit)
     var guestLabel by remember { mutableStateOf(guest) }
 
 
-    CustomTopAppBar("Guest Word",navigateToScreen )
+
 
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Color.LightGray)) {
+
+        CustomTopAppBar("Guest Word",navigateToScreen )
 
         // correct answer label
         Spacer(modifier = Modifier.height(50.dp))
