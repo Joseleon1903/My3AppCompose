@@ -9,6 +9,9 @@ object Home
 object GuestWorld
 
 @Serializable
+object Login
+
+@Serializable
 data class Calculator(val name:String)
 
 @Serializable

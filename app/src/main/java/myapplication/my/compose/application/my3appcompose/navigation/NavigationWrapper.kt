@@ -1,11 +1,14 @@
 package myapplication.my.compose.application.my3appcompose.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import myapplication.my.compose.application.my3appcompose.calculator.CalculatorScreen
+import myapplication.my.compose.application.my3appcompose.login.ui.LoginScreen
+import myapplication.my.compose.application.my3appcompose.login.ui.LoginViewModel
 import myapplication.my.compose.application.my3appcompose.strory.AddCommentScreen
 import myapplication.my.compose.application.my3appcompose.strory.CommentDatabaseManager
 import myapplication.my.compose.application.my3appcompose.strory.CommentInfo
@@ -28,7 +31,11 @@ fun NavigationWrapper (){
 //    var question = UtilsWords.mixWord(day)
 
 
-    NavHost( navController = navController, startDestination = Home){
+    NavHost( navController = navController, startDestination = Login){
+
+        composable<Login> {
+            LoginScreen(viewModel = LoginViewModel())
+        }
 
         composable<Home> {
             HomeScreen{ it ->
