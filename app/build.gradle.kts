@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jetbrainsKotlinSerialization)
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -44,6 +46,8 @@ android {
 
 dependencies {
 
+    val room_version = "2.7.0"
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -58,10 +62,23 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.material.icons.extended.v151)
 
-    //vie model dependency
+    //view model dependency
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation("androidx.compose.runtime:runtime-livedata:1.5.1")
+    implementation("androidx.compose.runtime:runtime:1.7.8")
+    implementation("androidx.compose.runtime:runtime-livedata:1.7.8")
+    implementation("androidx.compose.runtime:runtime-rxjava2:1.7.8")
+
+    // room dependency
+    // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
+    // See Add the KSP plugin to your project
+    ksp("androidx.room:room-compiler:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+
+    //dependency injection
+    implementation("com.google.dagger:hilt-android:2.56.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.56.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -72,3 +89,4 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
 }
+

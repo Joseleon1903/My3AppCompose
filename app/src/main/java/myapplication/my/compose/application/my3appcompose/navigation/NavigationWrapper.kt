@@ -1,7 +1,6 @@
 package myapplication.my.compose.application.my3appcompose.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -11,17 +10,14 @@ import myapplication.my.compose.application.my3appcompose.login.ui.LoginScreen
 import myapplication.my.compose.application.my3appcompose.login.ui.LoginViewModel
 import myapplication.my.compose.application.my3appcompose.strory.AddCommentScreen
 import myapplication.my.compose.application.my3appcompose.strory.CommentDatabaseManager
-import myapplication.my.compose.application.my3appcompose.strory.CommentInfo
 import myapplication.my.compose.application.my3appcompose.strory.LongStoryScreen
 import myapplication.my.compose.application.my3appcompose.strory.TextUtil
 import myapplication.my.compose.application.my3appcompose.world.GuestWorldScreen
-import myapplication.my.compose.application.my3appcompose.world.UtilsWords
 import java.util.Random
-import kotlin.toString
 
 
 @Composable
-fun NavigationWrapper (){
+fun NavigationWrapper (loginViewModel : LoginViewModel ){
 
     val navController =  rememberNavController()
 
@@ -30,21 +26,26 @@ fun NavigationWrapper (){
     var day = Days[Random().nextInt(Days.size)]
 //    var question = UtilsWords.mixWord(day)
 
-
     NavHost( navController = navController, startDestination = Login){
 
         composable<Login> {
-            LoginScreen(viewModel = LoginViewModel())
+            loginViewModel.onCreate()
+            LoginScreen(viewModel = loginViewModel ){
+                navController.navigate(Home)
+            }
         }
 
         composable<Home> {
             HomeScreen{ it ->
                 println("Screen name $it")
                 if(it.equals(GuestWorld.toString(), true)){
+                    println("navigate to GuestWorld")
                     navController.navigate(GuestWorld)
                 }else if(it.equals(Calculator.toString(), true)){
+                    println("navigate to Calculator")
                     navController.navigate(Calculator(name = "Calculator"))
                 }else if(it.equals(LongStory.toString(), true)){
+                    println("navigate to LongStory")
                     navController.navigate(LongStory(comments = TextUtil().commentsToString(CommentDatabaseManager.get())
                     ))
                 }

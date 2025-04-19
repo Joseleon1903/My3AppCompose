@@ -4,9 +4,13 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import myapplication.my.compose.application.my3appcompose.login.LoginUseCase
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel(){
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase) : ViewModel(){
 
     private val _email = MutableLiveData<String>();
     val email : LiveData<String> = _email;
@@ -19,6 +23,12 @@ class LoginViewModel : ViewModel(){
 
     private val _isLoading = MutableLiveData<Boolean>();
     val isLoading : LiveData<Boolean> = _isLoading;
+
+    fun onCreate(){
+
+        println("Entering on create")
+
+    }
     
     fun onValueLoginChange(email:String , password:String){
         //asignando valores
@@ -29,17 +39,16 @@ class LoginViewModel : ViewModel(){
 
     }
 
-    suspend fun onLoginSelected(){
+    suspend fun onLoginSelected( navigateToScreen : () -> Unit){
         println("entring in onLoginSelected")
         _isLoading.value = true;
         delay(4000)
         _isLoading.value = false;
-
-
+        navigateToScreen()
     }
 
     private fun isValidPassowrd(pass: String): Boolean {
-        if(pass.equals("admin", true)){
+        if(pass.length >= 6){
             return true
         }
         return false

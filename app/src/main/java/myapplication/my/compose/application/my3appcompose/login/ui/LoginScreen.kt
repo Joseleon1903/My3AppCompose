@@ -42,7 +42,7 @@ import androidx.compose.ui.Alignment
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(viewModel : LoginViewModel){
+fun LoginScreen(viewModel : LoginViewModel, navigateToScreen : () -> Unit){
 
     val email : String by viewModel.email.observeAsState( initial = "")
     val password : String by viewModel.password.observeAsState( initial = "")
@@ -125,7 +125,7 @@ fun LoginScreen(viewModel : LoginViewModel){
 
             // Botón Log In
             Button(
-                onClick = { scope.launch {  viewModel.onLoginSelected() } },
+                onClick = { scope.launch {  viewModel.onLoginSelected(navigateToScreen) } },
                 enabled = loginEnable,
                 colors = ButtonDefaults.buttonColors(containerColor = Color(79,117,32,255)),
                 modifier = Modifier
@@ -167,6 +167,6 @@ fun LoginScreen(viewModel : LoginViewModel){
 @Composable
 fun AppLoginView(){
 
-    LoginScreen(viewModel = LoginViewModel())
+    //LoginScreen(viewModel = LoginViewModel(LoginViewModel()))
 
 }

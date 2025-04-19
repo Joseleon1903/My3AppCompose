@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -46,18 +47,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dagger.hilt.android.AndroidEntryPoint
+import myapplication.my.compose.application.my3appcompose.login.LoginUseCase
+import myapplication.my.compose.application.my3appcompose.login.ui.LoginViewModel
 import myapplication.my.compose.application.my3appcompose.navigation.HomeScreen
 import myapplication.my.compose.application.my3appcompose.navigation.NavigationWrapper
 import myapplication.my.compose.application.my3appcompose.ui.theme.My3AppComposeTheme
 import myapplication.my.compose.application.my3appcompose.world.UtilsWords
 import java.util.Random
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val loginViewModel: LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-           NavigationWrapper()
+           NavigationWrapper(loginViewModel= loginViewModel)
         }
     }
 }
