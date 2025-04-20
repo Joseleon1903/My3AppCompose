@@ -21,16 +21,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 import myapplication.my.compose.application.my3appcompose.navigation.CustomTopAppBar
+import javax.inject.Inject
 
 @Composable
-fun AddCommentScreen (comments :String, navigateToScreen : () -> Unit){
+fun AddCommentScreen (commentViewModel: CommentViewModel, navigateToScreen : () -> Unit){
 
     var nickname by remember { mutableStateOf("") }
     var content by remember { mutableStateOf("") }
@@ -38,9 +41,12 @@ fun AddCommentScreen (comments :String, navigateToScreen : () -> Unit){
     var sex by remember { mutableStateOf("") }
     val sexOptions = listOf(TextUtil.SexFemale, TextUtil.SexMale)
 
-    var commentList = TextUtil().stringToComments(comments)
+    var commentList = commentViewModel.comments.value
 
-    println("detail commentList: "+commentList.size)
+    println("detail commentList: "+ commentList?.size)
+
+    val scope = rememberCoroutineScope()
+
 
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -107,8 +113,9 @@ fun AddCommentScreen (comments :String, navigateToScreen : () -> Unit){
                 date = DateUtils.getFormattedDateTime()
                 println("Fecha " +date )
                 val comment = CommentInfo(nickname, content, date, sex)
-                CommentDatabaseManager.add(comment)
-                println("Add comment list " + CommentDatabaseManager.get().size)
+                scope.launch {
+                    commentViewModel.addComment(comment)
+                }
                 navigateToScreen()
                // onSubmit(comment)
             }) {
@@ -126,9 +133,11 @@ fun AddCommentScreen (comments :String, navigateToScreen : () -> Unit){
 @Composable
 fun AddCommentView(){
 
-    AddCommentScreen(
-        comments = "",
-        navigateToScreen = {}
-    )
+
+    val commentViewModel = null
+
+//    AddCommentScreen( commentViewModel
+//
+//    )
 
 }

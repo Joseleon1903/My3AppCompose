@@ -26,4 +26,8 @@ object RoomModule {
     @Provides
     fun provideUserDao(db : UserDatabase) = db.getAppUserDao();
 
+    @Singleton
+    @Provides
+    fun provideCommentDao(db : UserDatabase) = db.getCommentDao();
+
 }

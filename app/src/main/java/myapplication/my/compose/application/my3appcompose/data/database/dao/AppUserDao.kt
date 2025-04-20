@@ -10,9 +10,9 @@ import myapplication.my.compose.application.my3appcompose.data.database.entity.A
 interface AppUserDao {
 
     @Query("select * from App_User_tbl order by email desc")
-    suspend fun getAllUser(): List<AppUserEntity>;
+    suspend fun getAllUser(): List<AppUserEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUsers(users: List<AppUserEntity>);
+    suspend fun insertUsers(users: List<AppUserEntity>)
 
 }

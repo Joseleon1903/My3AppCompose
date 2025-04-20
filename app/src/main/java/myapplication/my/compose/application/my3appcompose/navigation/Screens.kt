@@ -15,7 +15,7 @@ object Login
 data class Calculator(val name:String)
 
 @Serializable
-data class LongStory(val comments :String)
+object LongStory
 
 @Serializable
-data class AddComment(val comments :String)
+object AddComment

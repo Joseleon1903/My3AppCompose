@@ -52,6 +52,7 @@ import myapplication.my.compose.application.my3appcompose.login.LoginUseCase
 import myapplication.my.compose.application.my3appcompose.login.ui.LoginViewModel
 import myapplication.my.compose.application.my3appcompose.navigation.HomeScreen
 import myapplication.my.compose.application.my3appcompose.navigation.NavigationWrapper
+import myapplication.my.compose.application.my3appcompose.strory.CommentViewModel
 import myapplication.my.compose.application.my3appcompose.ui.theme.My3AppComposeTheme
 import myapplication.my.compose.application.my3appcompose.world.UtilsWords
 import java.util.Random
@@ -61,11 +62,14 @@ class MainActivity : ComponentActivity() {
 
     private val loginViewModel: LoginViewModel by viewModels()
 
+    private val commentViewModel: CommentViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-           NavigationWrapper(loginViewModel= loginViewModel)
+           NavigationWrapper(loginViewModel= loginViewModel,
+               commentViewModel =commentViewModel )
         }
     }
 }

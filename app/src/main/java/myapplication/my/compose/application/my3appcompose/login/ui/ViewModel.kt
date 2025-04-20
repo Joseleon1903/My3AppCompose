@@ -1,6 +1,8 @@
 package myapplication.my.compose.application.my3appcompose.login.ui
 
+import android.os.Build
 import android.util.Patterns
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,12 +41,20 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
 
     }
 
-    suspend fun onLoginSelected( navigateToScreen : () -> Unit){
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun onLoginSelected(navigateToScreen : () -> Unit){
         println("entring in onLoginSelected")
         _isLoading.value = true;
         delay(4000)
+
+        val result = loginUseCase.invoke(_email.toString(), _password.toString())
         _isLoading.value = false;
-        navigateToScreen()
+
+        if(result) {
+            println("login successful")
+            navigateToScreen()
+        }
+        println("login $result")
     }
 
     private fun isValidPassowrd(pass: String): Boolean {

@@ -14,7 +14,6 @@ class LoginUseCase @Inject constructor (private val appUserRepository: AppUserRe
 
         println("Entering in LoginUseCase")
 
-
         val usersDb = appUserRepository.getAllUsers()
 
         println("usuario encontrados "+usersDb.size )

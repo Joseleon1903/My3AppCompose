@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 
 @Composable
-fun CommentList(comments: MutableList<CommentInfo>) {
+fun CommentList(comments: List<CommentInfo>) {
 
     Column {
         comments.forEach { item->

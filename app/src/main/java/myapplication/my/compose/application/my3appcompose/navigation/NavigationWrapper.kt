@@ -10,6 +10,7 @@ import myapplication.my.compose.application.my3appcompose.login.ui.LoginScreen
 import myapplication.my.compose.application.my3appcompose.login.ui.LoginViewModel
 import myapplication.my.compose.application.my3appcompose.strory.AddCommentScreen
 import myapplication.my.compose.application.my3appcompose.strory.CommentDatabaseManager
+import myapplication.my.compose.application.my3appcompose.strory.CommentViewModel
 import myapplication.my.compose.application.my3appcompose.strory.LongStoryScreen
 import myapplication.my.compose.application.my3appcompose.strory.TextUtil
 import myapplication.my.compose.application.my3appcompose.world.GuestWorldScreen
@@ -17,7 +18,7 @@ import java.util.Random
 
 
 @Composable
-fun NavigationWrapper (loginViewModel : LoginViewModel ){
+fun NavigationWrapper (loginViewModel : LoginViewModel, commentViewModel: CommentViewModel ){
 
     val navController =  rememberNavController()
 
@@ -46,8 +47,7 @@ fun NavigationWrapper (loginViewModel : LoginViewModel ){
                     navController.navigate(Calculator(name = "Calculator"))
                 }else if(it.equals(LongStory.toString(), true)){
                     println("navigate to LongStory")
-                    navController.navigate(LongStory(comments = TextUtil().commentsToString(CommentDatabaseManager.get())
-                    ))
+                    navController.navigate(LongStory)
                 }
             }
         }
@@ -68,13 +68,15 @@ fun NavigationWrapper (loginViewModel : LoginViewModel ){
 
         composable<LongStory> {
 
-            LongStoryScreen(TextUtil().commentsToString(CommentDatabaseManager.get()), navController){
+            commentViewModel.onCreate()
+
+            LongStoryScreen(commentViewModel, navController){
                 navController.popBackStack()
             }
         }
 
         composable<AddComment> {
-            AddCommentScreen(TextUtil().commentsToString(CommentDatabaseManager.get())){
+            AddCommentScreen(commentViewModel){
                 navController.popBackStack()
             }
         }

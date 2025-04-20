@@ -16,6 +16,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -25,12 +28,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import kotlinx.coroutines.launch
 import myapplication.my.compose.application.my3appcompose.R
 import myapplication.my.compose.application.my3appcompose.navigation.AddComment
 import myapplication.my.compose.application.my3appcompose.navigation.CustomTopAppBar
 
 @Composable
-fun LongStoryScreen (comments :String, navController: NavHostController?, navigateToScreen : () -> Unit){
+fun LongStoryScreen (viewModel : CommentViewModel ,  navController: NavHostController?, navigateToScreen : () -> Unit){
+
+    val comments : List<CommentInfo> by viewModel.comments.observeAsState( initial = arrayListOf())
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -38,7 +44,6 @@ fun LongStoryScreen (comments :String, navController: NavHostController?, naviga
 
         CustomTopAppBar("Long Story",navigateToScreen )
 
-        println("LongStoryScreen commentList: $comments")
 
         // Imagen superior
         Image(
@@ -95,8 +100,9 @@ fun LongStoryScreen (comments :String, navController: NavHostController?, naviga
         // comments
         Spacer(modifier = Modifier.height(15.dp))
 
+
         if(!comments.isEmpty()){
-            CommentList(comments = TextUtil().stringToComments(comments))
+            CommentList(comments =comments)
         }
 
 //        CommentItem( CommentInfo( nickname= "App developer",
@@ -121,7 +127,7 @@ fun LongStoryScreen (comments :String, navController: NavHostController?, naviga
                     .padding(5.dp)
                     .fillMaxWidth(),
                 onClick = { println("Press button")
-                    navController?.navigate(AddComment(comments))
+                    navController?.navigate(AddComment)
                 }) {
                 Text("White a comment")
             }
@@ -133,11 +139,11 @@ fun LongStoryScreen (comments :String, navController: NavHostController?, naviga
 @Preview(showBackground = true)
 @Composable
 fun AppMainView(){
-
-    LongStoryScreen(
-        comments = "",
-        navController = null,
-        navigateToScreen = {}
-    )
+//
+//    LongStoryScreen(
+//        comments = "",
+//        navController = null,
+//        navigateToScreen = {}
+//    )
 
 }
